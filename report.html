@@ -26370,7 +26370,7 @@ The test set should not do anything, since it is unseen in real cases.</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-I followed the traditional LeNet architecture, but have two different settings. First, I incraese the hidden nodes in each layer.</p>
+I used similar architecture with <a href="https://www.google.com.tw/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwiTqsb8-8vRAhUBopQKHafVC4oQFggbMAA&amp;url=http%3A%2F%2Fyann.lecun.com%2Fexdb%2Fpublis%2Fpdf%2Fsermanet-ijcnn-11.pdf&amp;usg=AFQjCNEtvdz_vnI9tg1wF96UcjxVYwxdHw">Traffic Sign Recognition with Multi-Scale Convolutional Networks</a>, but have two different settings. First, number of hidden nodes in each layer is different. I used:</p>
 
 <pre><code>layer_depth = {
     'layer_1': 16,
@@ -26379,7 +26379,7 @@ I followed the traditional LeNet architecture, but have two different settings. 
     'fully_connected_2': 128,
     'out': n_classes,
 }</code></pre>
-<p>Second, I add dropout to the last two fully connected layers to prevent from overfitting. Also, I applied ReLu as activation function.</p>
+<p>Second, I add dropout(keep_prob=0.5) to the last two fully connected layers to prevent from overfitting. And, ReLu is activation function which is the same as the paper.</p>
 
 </div>
 </div>
@@ -39326,7 +39326,7 @@ a = np.array([[ 0.24879643,  0.07032244,  0.12641572,  0.34763842,  0.07893497,
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-By checking those error images. total has 7 error cases, where 3 of them have correct answers in top-5. Looks like the model is certain about "speed limit signs".</p>
+By checking those error images. total has 7 error cases, where 3 of them have correct answers in top-5. Looks like the model is certain about "speed limit signs" and those "directional signs".</p>
 
 </div>
 </div>
