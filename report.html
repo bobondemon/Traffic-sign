@@ -25943,9 +25943,7 @@ X_test is of shape (12630, 32, 32, 2)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong>
-I subtracted the mean, then divided by the maximum of abs values in the image (histogram equalization has the similar results)
-I tried feed the raw gray values into the CNN, but it failed since the accuracy is ultimately low. Maybe it is because the scale of the data is [0, 255] and hence the 0.001 learning rate becomes improper. I also tried gaussian normalization which normalized gray values to mean=0, and var=1. It fails too.</p>
+<p><strong>Answer:</strong> I subtracted the mean, then divided by the maximum of abs values in the image. (histogram equalization has the similar results) This makes the distribution of data becomes "well-conditioned", which is well known that well-conditioned situation is likely to converge faster.</p>
 
 </div>
 </div>
@@ -26372,16 +26370,16 @@ The test set should not do anything, since it is unseen in real cases.</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-I followed the traditional LeNet architecture, but add dropout to the last two fully connected layers to prevent from overfitting.</p>
+I followed the traditional LeNet architecture, but have two different settings. First, I incraese the hidden nodes in each layer.</p>
 
 <pre><code>layer_depth = {
-    'layer_1': 6,
-    'layer_2': 16,
-    'fully_connected_1': 120,
-    'fully_connected_2': 84,
+    'layer_1': 16,
+    'layer_2': 32,
+    'fully_connected_1': 256,
+    'fully_connected_2': 128,
     'out': n_classes,
 }</code></pre>
-<p>Also, I applied ReLu as activation function.</p>
+<p>Second, I add dropout to the last two fully connected layers to prevent from overfitting. Also, I applied ReLu as activation function.</p>
 
 </div>
 </div>
@@ -27100,13 +27098,12 @@ kiRJHWazJkmS1GH/D7WLKS2YvVkWAAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p><strong>Adam</strong> is adopted as the optimizer. Other hyper-parameters are shown below</p>
+<p><strong>Adam</strong> is adopted as the optimizer. Since Adam also considers normalizing the variance during optimization (making well-conditioned), it converges faster and becomes my first choice. Other hyper-parameters are shown below</p>
 
 <pre><code>EPOCHS = 30
 BATCH_SIZE = 128
 rate = 0.001
-drop_out_keep_prob = 0.8
-l2_weight = 0.01</code></pre>
+drop_out_keep_prob = 0.5</code></pre>
 
 </div>
 </div>
@@ -27127,9 +27124,9 @@ l2_weight = 0.01</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>I found that the accuracy of training is easily approaching 99%, but it usually performs bad in test set.</p>
-<p>I think it might be overfitted. And hence, adding l2-regularization and dropout methods help leveraging this problem. However, these methods make training harder and need more epochs to converge.</p>
-<p>I also found that adding U (Chroma) feature performs better than only has Y (Luminance) feature.</p>
+<p>I found that the accuracy of training is easily approaching 99%, but it usually performs bad in test set.
+I think it might be overfitted. And hence, adding dropout method help leveraging this problem.
+I also found that adding U (Chroma) feature performs better than only has Y (Luminance) feature.</p>
 
 </div>
 </div>
@@ -27220,6 +27217,8 @@ l2_weight = 0.01</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
 I choosed 20 images from google map. See below figures that show the images and my prediction.</p>
+<p>Some images are in bad-conditioned, such as the "speed limit 30" sign (row3,col5 in the following figure) that has an outter rectangular shape and the color of inner red circle is faded.</p>
+<p>Moreover, background objects may confusing the classifer as well, such as (row1,col3 in the following figure). The small rectangular shape below the triangular may be together formed as a diamond shape, which is similar to the shape of "priority road" sign.</p>
 
 </div>
 </div>
@@ -32840,7 +32839,8 @@ AElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-It predicted worse than the test set. It only has <strong>13/20 = 65%</strong> accuracy.</p>
+It predicted worse than the test set and my expected. It only has <strong>13/20 = 65%</strong> accuracy.
+I think more tuning and more fake data (adding noise, jittering, perspective warpping ...) need to be done, in order to get better performance.</p>
 
 </div>
 </div>
